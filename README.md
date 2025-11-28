@@ -20,38 +20,76 @@ A organização dos arquivos segue uma estrutura modular, facilitando a separaç
 
 É uma *stack* robusta e moderna. Foi proposta no documento que descreve o desafio
 
-### 💾 Banco de Dados e Gerenciamento de Identidade
-
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **PostgreSQL 16.7** | SGDB *open source* robusto, estável e gratuito. |
-| **Keycloak 26.4.6** | Plataforma de Gerenciamento de Identidade e Acesso (**IAM**) para implementar **Single Sign-On (SSO)** e controle de permissões. |
-| **Flyway** | Ferramenta que **versiona e controla** as alterações no banco de dados de forma segura e sequencial. |
-
-### ⚙️ Back-end (API REST)
-
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **Java 21** | Linguagem de programação |
-| **Quarkus 3** | **Framework Java nativo** otimizado para otimizar criação de microserviços|
-| **Panache** | ORM Simplificado abstrai e simplifica o uso do Hibernate ORM |
-
-### 🌐 Front-end (Web UI)
-
-| Tecnologia | Descrição |
-| :--- | :--- |
-
-| **Angular 18** | Framework para o desenvolvimento WEB |
-| **PrimeNG** |  | Biblioteca UI de componentes de interface (*widgets*) para Angular |
-nh
-### 📦 Outras Ferramentas
-
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **Docker** | Containerização para empacotar e isolar os serviços |
-| **HeidiSQL** | Cliente BD, uma interface gráfica (GUI) para interagir e gerenciar banco de dados |
-| **VSCode** | Editor gráfico, utilizado para codificação e desenvolvimento. |
----
+<table>
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="4" align="center">
+                💾 Banco de Dados e IAM
+            </th>
+        </tr>
+        <tr>
+            <td align="center">**PostgreSQL 16.7**a</td>
+            <td>SGDB *open source* robusto, estável e gratuito.</td>
+        </tr>
+        <tr>
+            <td align="center">**Keycloak 26.4.6**</td>
+            <td>Plataforma de Gerenciamento de Identidade e Acesso (**IAM**) e controle de permissões.</td>
+        </tr>
+        <tr>
+            <td align="center">**Flyway**</td>
+            <td>Ferramenta que **versiona e controla** as alterações no banco de dados de forma segura e sequencial.</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                ⚙️ Back-end (API REST)
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Java 21</td>
+            <td>Linguagem de programação</td>
+        </tr>
+        <tr>
+            <td align="center">Quarkus 3</td>
+            <td>**Framework Java nativo** otimizado para otimizar criação de microserviços</td>
+        </tr>
+        <tr>
+            <td align="center">Panache</td>
+            <td>ORM Simplificado abstrai e simplifica o uso do Hibernate</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                🌐 Front-end e Serviços
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Angular 18</td>
+            <td>Framework para o desenvolvimento WEB</td>
+        </tr>
+        <tr>
+            <td align="center">PrimeNG</td>
+            <td>Biblioteca UI de componentes de interface (*widgets*) para Angular</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                📦 Outras Ferramentas
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Docker</td>
+            <td>Containerização para empacotar e isolar os serviços</td>
+        </tr>
+        <tr>
+            <td align="center">HeidiSQL</td>
+            <td>Cliente BD, uma interface gráfica (GUI) para interagir e gerenciar banco de dados</td>
+        </tr>
+        <tr>
+            <td align="center">VSCode</td>
+            <td>Editor gráfico, utilizado para codificação e desenvolvimento</td>
+        </tr>
+      </tbody>
+</table>
 
 ## 🛠️ Como Iniciar o Projeto
 
