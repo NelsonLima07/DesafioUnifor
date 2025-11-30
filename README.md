@@ -14,7 +14,7 @@ A organização dos arquivos segue uma estrutura modular, facilitando a separaç
 | **`uni4_academico-bd/`** | Banco de daados e Keycloak | Arquivos de configuração e inicialização do banco de dados |
 | **`uni4_academico-front/`** | Front-end (Web UI) | Código do sistema web de interface do usuário |
 
-Diagrama do banco de dados: https://dbdiagram.io/d/Uni4-academico-692c601ed6676488baf596c6`**
+Diagrama do banco de dados: https://dbdiagram.io/d/Uni4-academico-692c601ed6676488baf596c6
 ---
 
 ## 🚀 Tecnologias Utilizadas

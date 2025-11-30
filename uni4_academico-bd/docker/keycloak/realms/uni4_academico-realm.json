@@ -1,0 +1,36 @@
+{
+  "realm": "uni4_academico",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "uni4-academico-api",
+      "name": "Desafio Unifor",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "unifor",
+      "redirectUris": ["http://localhost:8080/*"],
+      "webOrigins": ["*"],
+      "directAccessGrantsEnabled": true
+    }
+  ],
+  "roles": {
+    "realm": [
+      { 
+		"name": "ALUNO",
+		"description": "Perfil de aluno",
+		"composite": false
+	  },
+      { 
+		"name": "PROFESSOR",
+		"description": "Perfil de professor",
+		"composite": false
+	  },
+      { 
+		"name": "COORDENADOR",
+		"description": "Perfil de professor",
+		"composite": false
+	  }
+    ]
+  }
+}

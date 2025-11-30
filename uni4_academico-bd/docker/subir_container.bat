@@ -1,0 +1,1 @@
+docker-compose -p uni4_academico up -d
