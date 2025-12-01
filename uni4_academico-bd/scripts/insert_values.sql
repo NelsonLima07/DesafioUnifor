@@ -1,0 +1,1 @@
+INSERT  INTO aluno(nome, email, keycloak_id) VALUES('Nelso Lima', 'nelson@uni4.com', 1);
