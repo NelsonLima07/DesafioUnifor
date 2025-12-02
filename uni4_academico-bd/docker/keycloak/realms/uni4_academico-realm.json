@@ -28,9 +28,27 @@
 	  },
       { 
 		"name": "COORDENADOR",
-		"description": "Perfil de professor",
+		"description": "Perfil de coordenador",
 		"composite": false
 	  }
     ]
-  }
+  },
+  "users": [
+    {
+      "username": "nelson.lima@uni4.com",
+      "enabled": true,
+      "email": "nelson.lima@uni4.com",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "COORDENADOR"
+      ]
+    }
+  ]
 }

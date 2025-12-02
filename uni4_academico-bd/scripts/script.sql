@@ -5,7 +5,7 @@ datacadastro date not null default current_date,
 horacadastro time not null default current_time,
 nome varchar(120) not null,
 email varchar(80) not null,
-keycloak_id integer not null,
+keycloak_id UUID not null,
 delete_at timestamp default null
 )
 
@@ -16,7 +16,7 @@ datacadastro date not null,
 horacadastro time not null,
 nome varchar(120) not null,
 email varchar(80) not null,
-keycloak_id integer not null
+keycloak_id UUID not null
 )
 
 create table coordenador
@@ -26,7 +26,7 @@ datacadastro date not null,
 horacadastro time not null,
 nome varchar(120) not null,
 email varchar(80) not null,
-keycloak_id integer not null
+keycloak_id UUID not null
 )
 
 create table curso

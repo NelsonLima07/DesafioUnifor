@@ -1,1 +1,2 @@
-INSERT  INTO aluno(nome, email, keycloak_id) VALUES('Nelso Lima', 'nelson@uni4.com', 1);
+INSERT  INTO aluno(nome, email, keycloak_id) VALUES('Nelso Lima', 'nelson@uni4.com', '');
+INSERT  INTO coordenador(nome, email, keycloak_id) VALUES('Nelso Lima', 'nelson@uni4.com', '');
