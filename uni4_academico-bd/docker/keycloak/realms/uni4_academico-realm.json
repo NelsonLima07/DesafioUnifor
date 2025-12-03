@@ -8,12 +8,21 @@
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": false,
-      "secret": "unifor",
+      "secret": "uni4",
       "redirectUris": ["http://localhost:8080/*"],
       "webOrigins": ["*"],
-      "directAccessGrantsEnabled": true
+      "directAccessGrantsEnabled": true,
+	  "serviceAccountsEnabled": true
     }
   ],
+  "clientScopeMappings": {
+	"uni4-academico-api": [
+	  {
+		"client": "realm-management",
+		"roles": ["manage-users"]
+	  }
+	]
+  },
   "roles": {
     "realm": [
       { 
