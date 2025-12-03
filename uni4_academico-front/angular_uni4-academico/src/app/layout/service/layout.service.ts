@@ -25,12 +25,14 @@ interface MenuChangeEvent {
 @Injectable({
     providedIn: 'root'
 })
+
+/// Tema padrão
 export class LayoutService {
     _config: layoutConfig = {
         preset: 'Aura',
-        primary: 'emerald',
-        surface: null,
-        darkTheme: false,
+        primary: 'sky',
+        surface: 'zinc',
+        darkTheme: true,
         menuMode: 'static'
     };
 
@@ -63,6 +65,7 @@ export class LayoutService {
     overlayOpen$ = this.overlayOpen.asObservable();
 
     theme = computed(() => (this.layoutConfig()?.darkTheme ? 'light' : 'dark'));
+    
 
     isSidebarActive = computed(() => this.layoutState().overlayMenuActive || this.layoutState().staticMenuMobileActive);
 
