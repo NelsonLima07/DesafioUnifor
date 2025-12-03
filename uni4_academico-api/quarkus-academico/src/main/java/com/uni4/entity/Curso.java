@@ -19,10 +19,10 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "datacadastro", nullable = false)
+    @Column(name = "datacadastro", insertable = false, updatable = false)
     private LocalDate dataCadastro;
 
-    @Column(name = "horacadastro", nullable = false)
+    @Column(name = "horacadastro", insertable = false, updatable = false)
     private LocalTime horaCadastro;
 
     @Column(name = "nome", length = 60, nullable = false)
