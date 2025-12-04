@@ -1,9 +1,9 @@
-# 🎓 Desafio de Arquitetura de Software - Sistema Acadêmico Uni4
+## 🎓 Desafio de Arquitetura de Software - Sistema Acadêmico Uni4
 
 Este repositório contém a solução proposta para o Desafio de Arquiteto de Software da Unifor. A arquitetura foi estruturada com foco em **microsserviços modernos**, **performance** e **escalabilidade**
 ---
 
-## 📁 Estrutura do Repositório
+### 📁 Estrutura do Repositório
 
 A organização dos arquivos segue uma estrutura modular, facilitando a separação de responsabilidades entre as camadas do projeto:
 
@@ -17,7 +17,7 @@ A organização dos arquivos segue uma estrutura modular, facilitando a separaç
 Diagrama do banco de dados: https://dbdiagram.io/d/Uni4-academico-692c601ed6676488baf596c6
 ---
 
-## 🚀 Tecnologias Utilizadas
+### 🚀 Tecnologias Utilizadas
 
 É uma *stack* robusta e moderna. Foi proposta no documento que descreve o desafio
 
@@ -92,7 +92,39 @@ Diagrama do banco de dados: https://dbdiagram.io/d/Uni4-academico-692c601ed66764
       </tbody>
 </table>
 
-## 🛠️ Como Iniciar o Projeto
+### 🛠️ Como Iniciar o Projeto
 
-Certifique-se que tenha o **docker** instalado e um client **Git**
+    #### Pré-requisitos 
+    Node.js - https://nodejs.org/pt
+    Docker - https://www.docker.com/
+    Java JDK - https://www.oracle.com/java/
+    Quarkus - https://quarkus.io/
+    Gradle - https://gradle.org/
+
+Certifique-se que tenha tudo instalado corretamente. E sigas os seguintes passos
+
+### 1. Subir Banco e Keycloak
+
+Na pasta: uni4_academico-bd\docker do projeto
+```
+docker-compose -p uni4_academico up -d
+````
+PostgreSQL: Teste o acesso com algum cliente de acesso a banco de dados Postgre. Verifique as configurações em .env da mesma pasta.
+Keycloak: Teste o acesso navegando localhost:8080. 
+
+### 2. Subir API Quarkus
+Na pasta: uni4_academico-api\quarkus-academico do projeto
+```
+gradle quarkusdev
+````
+Quarkus: Teste o acesso navegando localhost:8180. 
+
+### 3. Subir Front web Angular
+Na pasta: uni4_academico-front\angular_uni4-academico do projeto
+```
+ng serve
+````
+Angular: Teste o acesso navegando localhost:4200. 
+
+Faça login acessando: admin / admin
 ---
