@@ -17,8 +17,8 @@ services:
       retries: 5
 
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./init_script:/docker-entrypoint-initdb.d
+      - pgdata:/var/lib/postgresql/data:Z
+      - ./init_script:/docker-entrypoint-initdb.d:Z
 
       
   #Sistema de backup
@@ -45,7 +45,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./keycloak/realms:/opt/keycloak/data/import
+      - ./keycloak/realms:/opt/keycloak/data/import:Z
     command: [ "start-dev", "--import-realm" ]      
       
 
