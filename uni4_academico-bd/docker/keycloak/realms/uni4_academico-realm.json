@@ -43,21 +43,21 @@
     ]
   },
   "users": [
-    {
-      "username": "nelson.lima@uni4.com",
+      {
+      "username": "admin",
       "enabled": true,
-      "email": "nelson.lima@uni4.com",
       "emailVerified": true,
+      "email": "admin@uni4.com",
+      "firstName": "Administrador",
+      "lastName": "Master",
       "credentials": [
         {
           "type": "password",
-          "value": "1234",
+          "value": "admin",
           "temporary": false
         }
       ],
-      "realmRoles": [
-        "COORDENADOR"
-      ]
+      "realmRoles": ["ADMIN"]
     }
   ]
 }
