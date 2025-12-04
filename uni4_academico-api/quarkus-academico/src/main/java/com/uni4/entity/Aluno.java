@@ -6,6 +6,10 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "aluno")
@@ -19,10 +23,10 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "datacadastro", nullable = false)
+    @Column(name = "datacadastro", insertable = false, updatable = false)
     private LocalDate dataCadastro;
 
-    @Column(name = "horacadastro", nullable = false)
+    @Column(name = "horacadastro", insertable = false, updatable = false)
     private LocalTime horaCadastro;
 
     @Column(name = "nome", length = 120, nullable = false)
@@ -32,8 +36,13 @@ public class Aluno {
     private String email;
 
     @Column(name = "keycloak_id", nullable = false)
-    private Integer keycloakId;
+    private UUID keycloakId;
 
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
+
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<AlunoCurso> cursos;
+
 }

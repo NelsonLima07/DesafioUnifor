@@ -6,6 +6,8 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+
 
 @Entity
 @Table(name = "curso")
@@ -33,4 +35,8 @@ public class Curso {
 
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AlunoCurso> alunos;
+
 }

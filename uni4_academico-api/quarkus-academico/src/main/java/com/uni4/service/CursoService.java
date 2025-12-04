@@ -1,12 +1,15 @@
 package com.uni4.service;
 
+import com.uni4.dto.CursoDTO;
 import com.uni4.entity.Curso;
+import com.uni4.mapper.CursoMapper;
 import com.uni4.repository.CursoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CursoService {
@@ -14,33 +17,40 @@ public class CursoService {
     @Inject
     CursoRepository cursoRepository;
 
-    public List<Curso> listAll() {
-        return cursoRepository.listAll();
+    public List<CursoDTO> listAll() {
+        return cursoRepository.findAll()
+                .stream()
+                .map(CursoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Curso findById(Long id) {
-        return cursoRepository.findById(id);
+    public CursoDTO findById(Long id) {
+        Curso curso = cursoRepository.findById(id);
+        return CursoMapper.toDTO(curso);
     }
 
     @Transactional
-    public void create(Curso curso) {
-        cursoRepository.persist(curso);
-    }
-
-    @Transactional
-    public void update(Long id, Curso curso) {
-        Curso entity = cursoRepository.findById(id);
-        if (entity != null) {
-            entity.setNome(curso.getNome());
-            entity.setQtdSemestres(curso.getQtdSemestres());
-            entity.setDataCadastro(curso.getDataCadastro());
-            entity.setHoraCadastro(curso.getHoraCadastro());
-            entity.setDeleteAt(curso.getDeleteAt());
+    public CursoDTO create(CursoDTO dto) {
+        if (dto.nome() == null || dto.nome().isBlank()) {
+            throw new IllegalArgumentException("[CursoDTO:create] nome não pode ser nulo ou vazio");
         }
+        Curso curso = CursoMapper.toEntity(dto);
+        cursoRepository.persist(curso);
+        return CursoMapper.toDTO(curso);
+    }
+
+    @Transactional
+    public CursoDTO update(Long id, CursoDTO dto) {
+        Curso curso = cursoRepository.findById(id);
+        curso.setNome(dto.nome());
+        curso.setQtdSemestres(dto.qtdSemestres());
+
+        return CursoMapper.toDTO(curso);
     }
 
     @Transactional
     public void delete(Long id) {
-        cursoRepository.deleteById(id);
+        Curso curso = cursoRepository.findById(id);
+        cursoRepository.delete(curso);
     }
 }

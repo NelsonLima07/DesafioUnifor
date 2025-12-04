@@ -1,6 +1,6 @@
 package com.uni4.resource;
 
-import com.uni4.entity.Professor;
+import com.uni4.dto.ProfessorDTO;
 import com.uni4.service.ProfessorService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,35 +17,35 @@ public class ProfessorResource {
     @Inject
     ProfessorService professorService;
 
-    // 🔹 Listar todos
+    //Listar todos (retorna DTOs)
     @GET
-    public List<Professor> listAll() {
+    public List<ProfessorDTO> listAll() {
         return professorService.listAll();
     }
 
-    // 🔹 Buscar por ID
+    //Buscar por ID (retorna DTO)
     @GET
     @Path("/{id}")
-    public Professor findById(@PathParam("id") Long id) {
+    public ProfessorDTO findById(@PathParam("id") Long id) {
         return professorService.findById(id);
     }
 
-    // 🔹 Criar novo professor
+    //Criar novo curso (recebe DTO e retorna DTO)
     @POST
-    public Response create(Professor professor) {
-        professorService.create(professor);
-        return Response.status(Response.Status.CREATED).entity(professor).build();
+    public Response create(ProfessorDTO dto) {
+        ProfessorDTO obj = professorService.create(dto);
+        return Response.status(Response.Status.CREATED).entity(obj).build();
     }
 
-    // 🔹 Atualizar professor existente
+    //Atualizar curso existente (recebe DTO e retorna DTO)
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, Professor professor) {
-        professorService.update(id, professor);
-        return Response.ok(professor).build();
+    public Response update(@PathParam("id") Long id, ProfessorDTO dto) {
+        ProfessorDTO obj = professorService.update(id, dto);
+        return Response.ok(obj).build();
     }
 
-    // 🔹 Deletar professor
+    //Deletar curso
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {

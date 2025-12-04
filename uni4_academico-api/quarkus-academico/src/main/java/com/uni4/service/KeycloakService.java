@@ -1,9 +1,14 @@
 package com.uni4.service;
 
-import com.uni4.dto.LoginRequest;
-import com.uni4.dto.TokenResponse;
-import com.uni4.dto.UserRequest;
+import com.uni4.client.KeycloakClient;
+import com.uni4.dto.LoginRequestDTO;
+import com.uni4.dto.LogoutRequestDTO;
+import com.uni4.dto.TokenDTO;
+import com.uni4.dto.UserKeycloakDTO;
+
+import io.vertx.codegen.doc.Token;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -13,90 +18,55 @@ import jakarta.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @ApplicationScoped
 public class KeycloakService {
 
-    private static final String KEYCLOAK_SERVER = "http://localhost:8080";
     private static final String REALM = "uni4_academico";
-    private static final String CLIENT_ID = "uni4-academico-api";
-    private static final String CLIENT_SECRET = "unifor";
+    //private static final String CLIENT_ID = "uni4-academico-api";
+    private static final String CLIENT_ID = "admin-cli";
+    private static final String CLIENT_SECRET = "uni4";
+    
+    private static final String ADMIN_USER = "admin";
+    private static final String ADMIN_PASS = "admin";
 
-    private static final String TOKEN_URL = KEYCLOAK_SERVER + "/realms/" + REALM + "/protocol/openid-connect/token";
-    private static final String LOGOUT_URL = KEYCLOAK_SERVER + "/realms/" + REALM + "/protocol/openid-connect/logout";
-    private static final String ADMIN_USERS_URL = KEYCLOAK_SERVER + "/admin/realms/" + REALM + "/users";
+    @Inject
+    @RestClient
+    KeycloakClient keycloakClient;
 
-    //Login
-    public TokenResponse login(LoginRequest loginRequest) {
-        Client client = ClientBuilder.newClient();
-
-        Form form = new Form();
-        form.param("grant_type", "password");
-        form.param("client_id", CLIENT_ID);
-        form.param("client_secret", CLIENT_SECRET);
-        form.param("username", loginRequest.getUsername());
-        form.param("password", loginRequest.getPassword());
-
-        Response response = client.target(TOKEN_URL)
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.form(form));
-
-        if (response.getStatus() == 200) {
-            return response.readEntity(TokenResponse.class);
-        } else {
-            throw new RuntimeException("Erro ao autenticar no Keycloak: " + response.getStatus());
-        }
+    public String getAdminToken() {
+        TokenDTO token = keycloakClient.getTokenAdm(
+            CLIENT_ID,     
+            CLIENT_SECRET, 
+            "client_credentials"
+        );
+        return token.accessToken();
     }
 
-    //Logout
-    public void logout(String refreshToken) {
-        Client client = ClientBuilder.newClient();
+    public String createUser(UserKeycloakDTO userKeycloakDTO) {
+        
+        //String adminToken = getAdminToken();
+        TokenDTO adminToken = this.login(
+            new LoginRequestDTO(ADMIN_USER, ADMIN_PASS)
+        );
+        
+        
+        Response response = keycloakClient.createUser("Bearer " + adminToken.accessToken(), userKeycloakDTO);
+        // Pega o UUID do novo usuário
+        String location = response.getHeaderString("Location");
+        String uuid = location.substring(location.lastIndexOf("/") + 1);
 
-        Form form = new Form();
-        form.param("client_id", CLIENT_ID);
-        form.param("client_secret", CLIENT_SECRET);
-        form.param("refresh_token", refreshToken);
-
-        Response response = client.target(LOGOUT_URL)
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.form(form));
-
-        if (response.getStatus() != 204) {
-            throw new RuntimeException("Erro ao realizar logout no Keycloak: " + response.getStatus());
-        }
+        return uuid;
     }
-
-    //Criar usuário
-    public String createUser(UserRequest userRequest, String adminToken) {
-        Client client = ClientBuilder.newClient();
-        ObjectMapper mapper = new ObjectMapper();
-
-        // Monta JSON do usuário
-        ObjectNode userJson = mapper.createObjectNode();
-        userJson.put("username", userRequest.getUsername());
-        userJson.put("email", userRequest.getEmail());
-        userJson.put("enabled", true);
-
-        ObjectNode credential = mapper.createObjectNode();
-        credential.put("type", "password");
-        credential.put("value", userRequest.getPassword());
-        credential.put("temporary", false);
-
-        ArrayNode credentials = mapper.createArrayNode();
-        credentials.add(credential);
-
-        userJson.set("credentials", credentials);
-
-        Response response = client.target(ADMIN_USERS_URL)
-                .request(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + adminToken)
-                .post(Entity.json(userJson.toString()));
-
-        if (response.getStatus() == 201) {
-            String location = response.getHeaderString("Location");
-            return location.substring(location.lastIndexOf("/") + 1);
-        } else {
-            throw new RuntimeException("Erro ao criar usuário no Keycloak: " + response.getStatus());
-        }
+    
+    public TokenDTO login(LoginRequestDTO loginRequestDTO) {
+        TokenDTO token = keycloakClient.getTokenLogin(
+            CLIENT_ID,
+            loginRequestDTO.username(),
+            loginRequestDTO.password(),
+            "password"
+        );
+        return token;
     }
 }

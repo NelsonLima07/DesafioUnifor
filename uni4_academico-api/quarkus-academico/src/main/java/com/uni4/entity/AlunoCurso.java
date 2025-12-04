@@ -6,8 +6,16 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+
 @Entity
-@Table(name = "aluno_curso")
+@Table(name = "aluno_curso",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"id_aluno", "id_curso"})
+    }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +35,7 @@ public class AlunoCurso {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_aluno", nullable = false,
                 foreignKey = @ForeignKey(name = "fk_aluno_curso_aluno"))
+    @JsonBackReference
     private Aluno aluno;
 
     @ManyToOne(fetch = FetchType.LAZY)

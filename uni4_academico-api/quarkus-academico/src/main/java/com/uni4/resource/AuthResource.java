@@ -1,8 +1,8 @@
 package com.uni4.resource;
 
-import com.uni4.dto.LoginRequest;
-import com.uni4.dto.TokenResponse;
-import com.uni4.dto.UserRequest;
+import com.uni4.dto.LoginRequestDTO;
+import com.uni4.dto.LogoutRequestDTO;
+import com.uni4.dto.TokenDTO;
 import com.uni4.service.KeycloakService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,13 +17,12 @@ public class AuthResource {
     @Inject
     KeycloakService keycloakService;
 
-    // 🔹 Login
     @POST
     @Path("/login")
-    public Response login(LoginRequest loginRequest) {
+    public Response login(LoginRequestDTO loginRequestDTO) {
         try {
-            TokenResponse tokenResponse = keycloakService.login(loginRequest);
-            return Response.ok(tokenResponse).build();
+            TokenDTO token = keycloakService.login(loginRequestDTO);
+            return Response.ok(token).build();
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("Login falhou: " + e.getMessage())
@@ -31,31 +30,9 @@ public class AuthResource {
         }
     }
 
-    // 🔹 Logout
     @POST
     @Path("/logout")
-    public Response logout(@QueryParam("refresh_token") String refreshToken) {
-        try {
-            keycloakService.logout(refreshToken);
-            return Response.noContent().build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Logout falhou: " + e.getMessage())
-                    .build();
-        }
-    }
-
-    // 🔹 Criar usuário
-    @POST
-    @Path("/create-user")
-    public Response createUser(UserRequest userRequest, @HeaderParam("Authorization") String adminToken) {
-        try {
-            String userId = keycloakService.createUser(userRequest, adminToken.replace("Bearer ", ""));
-            return Response.status(Response.Status.CREATED).entity("{\"id\":\"" + userId + "\"}").build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Erro ao criar usuário: " + e.getMessage())
-                    .build();
-        }
+    public Response logout(LogoutRequestDTO logoutRequestDTO) {
+        return Response.ok(logoutRequestDTO).build();
     }
 }

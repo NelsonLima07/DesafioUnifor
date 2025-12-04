@@ -1,6 +1,6 @@
 package com.uni4.resource;
 
-import com.uni4.entity.Curso;
+import com.uni4.dto.CursoDTO;
 import com.uni4.service.CursoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -17,35 +17,35 @@ public class CursoResource {
     @Inject
     CursoService cursoService;
 
-    // 🔹 Listar todos
+    //Listar todos (retorna DTOs)
     @GET
-    public List<Curso> listAll() {
+    public List<CursoDTO> listAll() {
         return cursoService.listAll();
     }
 
-    // 🔹 Buscar por ID
+    //Buscar por ID (retorna DTO)
     @GET
     @Path("/{id}")
-    public Curso findById(@PathParam("id") Long id) {
+    public CursoDTO findById(@PathParam("id") Long id) {
         return cursoService.findById(id);
     }
 
-    // 🔹 Criar novo curso
+    //Criar novo curso (recebe DTO e retorna DTO)
     @POST
-    public Response create(Curso curso) {
-        cursoService.create(curso);
-        return Response.status(Response.Status.CREATED).entity(curso).build();
+    public Response create(CursoDTO dto) {
+        CursoDTO obj = cursoService.create(dto);
+        return Response.status(Response.Status.CREATED).entity(obj).build();
     }
 
-    // 🔹 Atualizar curso existente
+    //Atualizar curso existente (recebe DTO e retorna DTO)
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, Curso curso) {
-        cursoService.update(id, curso);
-        return Response.ok(curso).build();
+    public Response update(@PathParam("id") Long id, CursoDTO dto) {
+        CursoDTO obj = cursoService.update(id, dto);
+        return Response.ok(obj).build();
     }
 
-    // 🔹 Deletar curso
+    //Deletar curso
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
