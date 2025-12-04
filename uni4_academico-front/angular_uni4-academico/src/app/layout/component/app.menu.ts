@@ -27,8 +27,7 @@ export class AppMenu {
             {
                 label: 'Aluno',
                 items: [
-                    { label: 'Cursos', icon: 'pi pi-graduation-cap', routerLink: ['/aluno/cursos'] },
-                    { label: 'Notas', icon: 'pi pi-fw pi-check-square', routerLink: ['/aluno/notas'] },
+                    { label: 'Meus Cursos', icon: 'pi pi-graduation-cap', routerLink: ['/aluno/cursos'] }
                 ]
             },
             {
@@ -36,7 +35,7 @@ export class AppMenu {
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                     {
-                        label: 'Disciplinas',
+                        label: 'Lançar Notas',
                         icon: 'pi pi-book',
                         routerLink: ['/professor/disciplinas']
                     },
@@ -67,14 +66,13 @@ export class AppMenu {
                 items: [
                     {
                         label: 'Suporte',
-                        icon: 'pi pi-fw pi-book',
-                        routerLink: ['/documentation']
+                        icon: 'pi pi-wrench',
+                        routerLink: ['/suporte']
                     },
                     {
                         label: 'Links',
-                        icon: 'pi pi-fw pi-github',
-                        url: 'https://github.com/primefaces/sakai-ng',
-                        target: '_blank'
+                        icon: 'pi pi-globe',
+                        routerLink: ['/links'],
                     }
                 ]
             }

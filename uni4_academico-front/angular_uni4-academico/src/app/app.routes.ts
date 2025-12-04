@@ -7,6 +7,9 @@ import { Home } from './pages/home/home';
 import { CursoComponent } from './pages/coordenador/curso';
 import { AlunoComponent } from './pages/coordenador/aluno';
 import { ProfessorComponent } from './pages/coordenador/professor';
+import { AlunoCursoComponent } from './pages/aluno/aluno-curso';
+import { LinksComponent } from './pages/utils/links';
+import { SuporteComponent } from './pages/utils/suporte';
 
 
 
@@ -23,8 +26,7 @@ export const appRoutes: Routes = [
         { 
           path: 'aluno',
           children: [
-            { path: '', component: Home },
-            { path: 'notas', component: Home },
+            { path: 'cursos', component: AlunoCursoComponent },
           ]
         },
         { path: 'professor',
@@ -40,6 +42,8 @@ export const appRoutes: Routes = [
             { path: 'alunos', component: AlunoComponent },
           ]
          },
+         { path: 'links', component: LinksComponent },
+         { path: 'suporte', component: SuporteComponent }
     ]
   },
   { path: 'notfound', component: Notfound },

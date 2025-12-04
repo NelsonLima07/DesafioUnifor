@@ -18,7 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Professor, ProfessorService } from './professor.service';
+import { Curso, CursoService } from './curso.service';
 import { FluidModule } from 'primeng/fluid';
 
 
@@ -58,17 +58,18 @@ interface ExportColumn {
         FluidModule,
         ReactiveFormsModule,
     ],
-    templateUrl: './professor.html',
-    providers: [MessageService, ProfessorService, ConfirmationService]
+    templateUrl: './aluno.html',
+    providers: [MessageService, CursoService, ConfirmationService]
 })
-export class ProfessorComponent implements OnInit {
+export class AlunoComponent implements OnInit {
    
 
-    professores = signal<Professor[]>([]);
+    cursos = signal<Curso[]>([]);
 
-    professor!: Professor;
+    curso!: Curso;
 
-    professorSelecionado!: Professor | null;
+    selecionadosCursos!: Curso[] | null;
+    cursoSelecionado!: Curso | null;
 
     novoForm: FormGroup;
     novoForm_exibir: boolean = false;
@@ -80,7 +81,7 @@ export class ProfessorComponent implements OnInit {
     cols!: Column[];
 
     constructor(
-        private professorService: ProfessorService,
+        private cursoService: CursoService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private fb: FormBuilder
@@ -88,7 +89,7 @@ export class ProfessorComponent implements OnInit {
     { 
         this.novoForm = this.fb.group({
             nome: ['', Validators.required],
-            email: ['', Validators.required]
+            qtdSemestres: ['', Validators.required]
         });
     }
 
@@ -101,10 +102,10 @@ export class ProfessorComponent implements OnInit {
     }
 
     loadDados() {
-        this.professorService.getProfessores().subscribe({
+        this.cursoService.getCursos().subscribe({
             next: (data) => {
-                this.professores.set(data);
-                console.log('Cursos fetched successfully:', this.professores());
+                this.cursos.set(data);
+                console.log('Cursos fetched successfully:', this.cursos());
             },
             error: (err) => {
                 console.error('Error fetching cursos:', err);
@@ -112,8 +113,8 @@ export class ProfessorComponent implements OnInit {
         });
 
         this.cols = [
-            { field: 'nome', header: 'Professor', customExportHeader: 'Nome Professor' },
-            { field: 'email', header: 'Email' },
+            { field: 'nome', header: 'Curso', customExportHeader: 'Nome Curso' },
+            { field: 'qtdSemestres', header: 'Semestres' },
         ];
 
         this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -124,24 +125,25 @@ export class ProfessorComponent implements OnInit {
     }
 
     btnNovo() {
-        this.professor = {};
+        this.curso = {};
         this.novoForm.reset();
+        //this.submitted = false;
         this.novoForm_exibir = true;
     }
     
     formNovo_onSubmit(){
         if (this.novoForm.valid) {
             
-            this.professor = this.novoForm.value;
+            this.curso = this.novoForm.value;
 
-            this.professorService.salvar(this.professor).subscribe({
+            this.cursoService.salvar(this.curso).subscribe({
                 next: () => {
-                    this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Professor salvo com sucesso'});
+                    this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Curso salvo com sucesso'});
                     this.loadDados();
                     
                 },
                 error: (erro) => {
-                    this.messageService.add({severity:'error', summary: 'Erro', detail: 'Erro ao salvar novo Professor'});
+                    this.messageService.add({severity:'error', summary: 'Erro', detail: 'Erro ao salvar novo curso'});
                     console.error('Erro ao salvar curso:', erro);
                 }
             });
@@ -156,32 +158,34 @@ export class ProfessorComponent implements OnInit {
     }
 
     btnEditar() {
+        //this.curso = { ...curso };
+        //this.productDialog = true;
     }
 
     btnDeletar() {
-        if(!this.professorSelecionado) {    
+        if(!this.cursoSelecionado) {    
             this.messageService.add({
                 severity: 'info',
                 summary: 'Atenção',
-                detail: 'Você precisa selecionar um professor',
+                detail: 'Você precisa selecionar um Curso',
                 life: 5000
             });
 
             return;
         }
         this.confirmationService.confirm({
-            message: 'Tem cereza que deseja deletar esse professor?',
+            message: 'Tem cereza que deseja deletar esse curso?',
             header: 'Confirmação',
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'Sim',
             rejectLabel: 'Não',
             accept: () => {
-                this.professorService.deletar(this.professorSelecionado?.id!).subscribe({
+                this.cursoService.deletar(this.cursoSelecionado?.id!).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Deletado',
-                            detail: 'Professor deletado com sucesso',
+                            detail: 'Curso deletado com sucesso',
                             life: 5000
                         });
                         this.loadDados();
@@ -193,7 +197,7 @@ export class ProfessorComponent implements OnInit {
                             detail: 'Algo deu errado, tente novamente mais tarde',
                             life: 5000
                         });
-                        console.error('Erro ao deletar professor:', erro);}
+                        console.error('Erro ao deletar curso:', erro);}
                 });
             }
         });
