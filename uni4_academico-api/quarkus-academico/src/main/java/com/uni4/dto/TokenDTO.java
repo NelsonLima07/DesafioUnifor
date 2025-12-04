@@ -1,19 +1,20 @@
 package com.uni4.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import java.io.Serializable;
 
-@Data
-public class TokenResponse {
+public record TokenDTO (
+
     @JsonProperty("access_token")
-    private String accessToken;
+    String accessToken,
 
     @JsonProperty("refresh_token")
-    private String refreshToken;
+    String refreshToken,
 
     @JsonProperty("expires_in")
-    private Long expiresIn;
+    Long expiresIn,
 
     @JsonProperty("token_type")
-    private String tokenType;
-}
+    String tokenType
+
+) implements Serializable {}
