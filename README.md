@@ -94,12 +94,12 @@ Diagrama do banco de dados: https://dbdiagram.io/d/Uni4-academico-692c601ed66764
 
 ### 🛠️ Como Iniciar o Projeto
 
-    #### Pré-requisitos 
-    Node.js - https://nodejs.org/pt
-    Docker - https://www.docker.com/
-    Java JDK - https://www.oracle.com/java/
-    Quarkus - https://quarkus.io/
-    Gradle - https://gradle.org/
+#### Pré-requisitos 
+Node.js - https://nodejs.org/pt
+Docker - https://www.docker.com/
+Java JDK - https://www.oracle.com/java/
+Quarkus - https://quarkus.io/
+Gradle - https://gradle.org/
 
 Certifique-se que tenha tudo instalado corretamente. E sigas os seguintes passos
 
@@ -126,5 +126,5 @@ ng serve
 ````
 Angular: Teste o acesso navegando localhost:4200. 
 
-Faça login acessando: admin / admin
+## ⚡Agora faça login acessando: admin / admin
 ---
