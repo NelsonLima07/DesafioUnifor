@@ -1,6 +1,29 @@
 {
   "realm": "uni4_academico",
   "enabled": true,
+  "requiredActions": [
+    {
+      "alias": "UPDATE_PASSWORD",
+      "name": "Update Password",
+      "providerId": "update_password",
+      "enabled": true,
+      "defaultAction": false  
+    },
+    {
+      "alias": "VERIFY_EMAIL",
+      "name": "Verify Email",
+      "providerId": "verify_email",
+      "enabled": true,
+      "defaultAction": false  
+    },
+    {
+      "alias": "CONFIGURE_TOTP",
+      "name": "Configure TOTP",
+      "providerId": "configure_totp",
+      "enabled": true,
+      "defaultAction": false  
+    }
+  ],
   "clients": [
     {
       "clientId": "uni4-academico-api",
@@ -43,21 +66,126 @@
     ]
   },
   "users": [
-      {
-      "username": "admin",
-      "enabled": true,
-      "emailVerified": true,
-      "email": "admin@uni4.com",
-      "firstName": "Administrador",
-      "lastName": "Master",
-      "credentials": [
-        {
-          "type": "password",
-          "value": "admin",
-          "temporary": false
-        }
-      ],
-      "realmRoles": ["ADMIN"]
-    }
+		{
+		  "id": "6d3a6edc-8df9-478c-972c-ec30cd4d9060",
+		  "username": "coordenador",
+		  "enabled": true,
+		  "emailVerified": true,
+		  "firstName": "Coordenador",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "requiredActions": [],
+		  "realmRoles": ["COORDENADOR"]
+		},
+		{
+		  "id": "b7ec9716-14a4-48f0-8ec3-9d0d8166f069",
+		  "username": "jesus.cristo@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Jesus Cristo",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "5c5b4469-edaa-4aa1-990f-edf0e27c158c",
+		  "username": "albert.einstein@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Albert Einstein",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "a0b33473-d78b-414b-8818-9c973a3ee26d",
+		  "username": "isaac.newton@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Isaac Newton",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "0a02e888-627d-433a-be7e-00462f74c9e6",
+		  "username": "raimundo.nonato@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Raimundo Nonato",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "95aa3ef3-d7ad-4923-a266-7807231c5bad",
+		  "username": "marcelo.gleiser@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Marcelo Gleiser",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "89eb8713-0a58-4a59-9f1e-4aba0a05e3a7",
+		  "username": "clovis.barros@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Clóvis de Barros",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		},
+		{
+		  "id": "282ba469-b333-4fd9-9959-3856b062d30d",
+		  "username": "charles.darwin@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Charles Darwin",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["PROFESSOR"]
+		}
   ]
 }
