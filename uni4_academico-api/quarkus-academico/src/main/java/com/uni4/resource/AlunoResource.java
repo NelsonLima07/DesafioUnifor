@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
-@Path("/professores")
+@Path("/aluno")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AlunoResource {
