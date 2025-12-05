@@ -19,6 +19,11 @@ export const appRoutes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: AppLayout,
     canActivate: [Guard],
     children: [

@@ -9,6 +9,12 @@ import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environments';
+import { LoginRequest } from './login-request.model';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../core/services/auth.service';
+
+
 
 @Component({
     selector: 'app-login',
@@ -17,35 +23,38 @@ import { Router } from '@angular/router';
     templateUrl: './login.html'
 })
 export class Login {
+    private urlAPI = `${environment.apiUrl}/cursos`;
+    
     loginForm: FormGroup;
-    email: string = '';
-    password: string = '';
+    //username: string = '';
+    //password: string = '';
     checked: boolean = false;
     
     constructor(
         private fb: FormBuilder,
-        private router: Router
+        private router: Router,
+        private httpClient: HttpClient,
+        private authService: AuthService
     )
     {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required],
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
 
+    ngOnInit(): void {
+        this.authService.logout();
+    }
+
     onSubmit() {
         if (this.loginForm.valid) {
-            
-            console.log('Formulário Válido. Tentando logar...');
-            
-            const token = 'fake-jwt-token';
-            localStorage.setItem('uni4-academico_token', token);
-            this.router.navigate(['/']);
+
+            this.authService.login(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value);
         }
         else{
             console.error('Login falhou. Formulário Inválido.');
             this.loginForm.markAllAsTouched();
         }
     } 
-
 }
