@@ -33,7 +33,7 @@ public class AlunoService {
     KeycloakService keycloakService;
 
     @Inject
-    public ProfessorService(AlunoRepository alunoRepository, @RestClient KeycloakClient keycloakClient) {
+    public AlunoService(AlunoRepository alunoRepository, @RestClient KeycloakClient keycloakClient) {
         this.alunoRepository = alunoRepository;
         this.keycloakClient = keycloakClient;
     }
