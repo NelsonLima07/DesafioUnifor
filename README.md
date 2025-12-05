@@ -126,5 +126,5 @@ ng serve
 ````
 Angular: Teste o acesso navegando localhost:4200. 
 
-## ⚡Agora faça login acessando: admin / admin
+## ⚡Agora faça login acessando: coordenador / 1234
 ---
