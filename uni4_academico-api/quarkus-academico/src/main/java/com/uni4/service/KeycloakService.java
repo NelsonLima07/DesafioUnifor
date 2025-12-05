@@ -9,6 +9,8 @@ import com.uni4.dto.UserKeycloakDTO;
 import io.vertx.codegen.doc.Token;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotAuthorizedException;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -19,17 +21,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import com.uni4.dto.LoginRequestKeycloakDTO;
+
 
 @ApplicationScoped
 public class KeycloakService {
 
     private static final String REALM = "uni4_academico";
-    //private static final String CLIENT_ID = "uni4-academico-api";
-    private static final String CLIENT_ID = "admin-cli";
+    private static final String CLIENT_ID = "uni4-academico-api";
     private static final String CLIENT_SECRET = "uni4";
     
     private static final String ADMIN_USER = "admin";
-    private static final String ADMIN_PASS = "admin";
+    private static final String ADMIN_PASS = "1234";
 
     @Inject
     @RestClient
@@ -60,13 +63,24 @@ public class KeycloakService {
         return uuid;
     }
     
+    // Pegar token do login
     public TokenDTO login(LoginRequestDTO loginRequestDTO) {
-        TokenDTO token = keycloakClient.getTokenLogin(
-            CLIENT_ID,
-            loginRequestDTO.username(),
-            loginRequestDTO.password(),
-            "password"
-        );
-        return token;
+        LoginRequestKeycloakDTO req = new LoginRequestKeycloakDTO();
+        req.clientId = CLIENT_ID;
+        req.clientSecret = CLIENT_SECRET;
+        req.username = loginRequestDTO.username();
+        req.password = loginRequestDTO.password();
+        req.grantType = "password";
+
+        try {
+            return  keycloakClient.getTokenLogin(req);
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == 400) {
+                throw new NotAuthorizedException("Usuário ou senha inválidos.", e);
+            }
+            throw e;
+        } catch (Exception e) {
+            throw new WebApplicationException("Erro inesperado ao processar o login com Keycloak.",500); // Internal Server Error
+        }
     }
 }
