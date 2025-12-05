@@ -15,6 +15,9 @@ public record TokenDTO (
     Long expiresIn,
 
     @JsonProperty("token_type")
-    String tokenType
+    String tokenType,
+
+    @JsonProperty("scope")
+    String scope
 
 ) implements Serializable {}
