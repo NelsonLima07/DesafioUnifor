@@ -1,5 +1,6 @@
 package com.uni4.service;
 
+import com.uni4.dto.HistoricoDTO;
 import com.uni4.entity.SemestreAluno;
 import com.uni4.repository.SemestreAlunoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,6 +23,11 @@ public class SemestreAlunoService {
     // **Buscar por ID**
     public SemestreAluno findById(Long id) {
         return semestreAlunoRepository.findById(id);
+    }
+
+    // Buscar o historico do Aluno
+    public List<HistoricoDTO> getHistoricoAluno(Long idAluno){
+        return semestreAlunoRepository.buscarHistoricoDTO(idAluno);
     }
 
     // **Criar novo registro**

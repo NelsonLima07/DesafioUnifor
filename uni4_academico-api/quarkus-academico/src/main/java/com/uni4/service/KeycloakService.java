@@ -2,24 +2,15 @@ package com.uni4.service;
 
 import com.uni4.client.KeycloakClient;
 import com.uni4.dto.LoginRequestDTO;
-import com.uni4.dto.LogoutRequestDTO;
 import com.uni4.dto.TokenDTO;
 import com.uni4.dto.UserKeycloakDTO;
 
-import io.vertx.codegen.doc.Token;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.Form;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import com.uni4.dto.LoginRequestKeycloakDTO;
 
@@ -27,7 +18,7 @@ import com.uni4.dto.LoginRequestKeycloakDTO;
 @ApplicationScoped
 public class KeycloakService {
 
-    private static final String REALM = "uni4_academico";
+//    private static final String REALM = "uni4_academico";
     private static final String CLIENT_ID = "uni4-academico-api";
     private static final String CLIENT_SECRET = "uni4";
     

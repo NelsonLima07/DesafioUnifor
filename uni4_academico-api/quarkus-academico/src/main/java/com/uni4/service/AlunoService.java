@@ -4,18 +4,11 @@ import com.uni4.dto.AlunoDTO;
 import com.uni4.entity.Aluno;
 import com.uni4.mapper.AlunoMapper;
 import com.uni4.repository.AlunoRepository;
-import com.uni4.dto.TokenDTO;
 import com.uni4.client.KeycloakClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import com.uni4.dto.UserKeycloakDTO;
-import com.uni4.service.KeycloakService;
-
-
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

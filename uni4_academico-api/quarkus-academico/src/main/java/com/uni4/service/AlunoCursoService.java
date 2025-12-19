@@ -1,6 +1,9 @@
 package com.uni4.service;
 
 import com.uni4.entity.AlunoCurso;
+import com.uni4.entity.Curso;
+import com.uni4.dto.CursoDTO;
+
 import com.uni4.repository.AlunoCursoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,6 +23,13 @@ public class AlunoCursoService {
 
     public AlunoCurso findById(Long id) {
         return alunoCursoRepository.findById(id);
+    }
+
+    public List<CursoDTO> findByAlunoId(Long idAluno) {
+        List<Curso> cursos = alunoCursoRepository.findByAlunoId(idAluno);
+        return cursos.stream()
+                .map(curso -> new CursoDTO(curso.getId(), curso.getNome(), curso.getQtdSemestres()))
+                .toList();
     }
 
     @Transactional

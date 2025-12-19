@@ -3,9 +3,12 @@ package com.uni4.resource;
 import com.uni4.entity.AlunoCurso;
 import com.uni4.service.AlunoCursoService;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import com.uni4.dto.CursoDTO;
 
 import java.util.List;
 
@@ -23,21 +26,29 @@ public class AlunoCursoResource {
         return alunoCursoService.listAll();
     }
 
-    // 🔹 Buscar por ID
+    //Buscar por ID
     @GET
     @Path("/{id}")
     public AlunoCurso findById(@PathParam("id") Long id) {
         return alunoCursoService.findById(id);
     }
 
-    // 🔹 Criar novo registro
+    // Buscar cursos por ID do aluno
+    @GET
+    @Path("/{idAluno}/cursos")
+    @Transactional
+    public List<CursoDTO> findByAlunoId(@PathParam("idAluno") Long idAluno) {
+        return alunoCursoService.findByAlunoId(idAluno);
+    }
+
+    //Criar novo registro
     @POST
     public Response create(AlunoCurso alunoCurso) {
         alunoCursoService.create(alunoCurso);
         return Response.status(Response.Status.CREATED).entity(alunoCurso).build();
     }
 
-    // 🔹 Atualizar registro existente
+    //Atualizar registro existente
     @PUT
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, AlunoCurso alunoCurso) {
@@ -45,7 +56,7 @@ public class AlunoCursoResource {
         return Response.ok(alunoCurso).build();
     }
 
-    // 🔹 Deletar registro
+    //Deletar registro
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
