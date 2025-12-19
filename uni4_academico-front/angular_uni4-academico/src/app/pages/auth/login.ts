@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environments';
 import { LoginRequest } from './login-request.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
+import { LayoutService } from '../../layout/service/layout.service';
 
 
 
@@ -34,13 +35,15 @@ export class Login {
         private fb: FormBuilder,
         private router: Router,
         private httpClient: HttpClient,
-        private authService: AuthService
+        private authService: AuthService,
+        private layoutService: LayoutService
     )
     {
         this.loginForm = this.fb.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
+        this.layoutService.toggleDarkMode(this.layoutService.layoutConfig());
     }
 
     ngOnInit(): void {
@@ -51,8 +54,10 @@ export class Login {
         if (this.loginForm.valid) {
 
             this.authService.login(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value);
+
         }
         else{
+            alert('Por favor, preencha todos os campos Email e Senha.');
             console.error('Login falhou. Formulário Inválido.');
             this.loginForm.markAllAsTouched();
         }

@@ -2,8 +2,8 @@
 <p-toolbar styleClass="mb-6">
     <ng-template #start>
         <p-button label="Novo" icon="pi pi-plus" severity="primary" class="mr-2" (onClick)="btnNovo()" />
-        <p-button severity="secondary" label="Editar" icon="pi pi-pencil" class="mr-2" (onClick)="btnEditar()" [disabled]="!cursoSelecionado" />
-        <p-button severity="secondary" label="Deletar" icon="pi pi-trash" class="mr-2"  (onClick)="btnDeletar()" [disabled]="!cursoSelecionado" />
+        <p-button severity="secondary" label="Editar" icon="pi pi-pencil" class="mr-2" (onClick)="btnEditar()" [disabled]="!alunoSelecionado" />
+        <p-button severity="secondary" label="Deletar" icon="pi pi-trash" class="mr-2"  (onClick)="btnDeletar()" [disabled]="!alunoSelecionado" />
     </ng-template>
 
     <ng-template #end>
@@ -13,14 +13,14 @@
 
 <p-table
     #dt
-    [value]="cursos()"
+    [value]="alunos()"
     [rows]="10"
     [columns]="cols"
     [paginator]="true"
     [globalFilterFields]="['nome']"
     [tableStyle]="{ 'min-width': '75rem' }"
     selectionMode="single"
-    [(selection)]="cursoSelecionado"
+    [(selection)]="alunoSelecionado"
     [rowHover]="true"
     dataKey="id"
     currentPageReportTemplate="Exibindo {first} ate {last}. Total:{totalRecords}"
@@ -29,7 +29,7 @@
 >
     <ng-template #caption>
         <div class="flex items-center justify-between">
-            <h5 class="m-0">Cursos ofertados</h5>
+            <h5 class="m-0">Alunos</h5>
             <p-iconfield>
                 <p-inputicon styleClass="pi pi-search" />
                 <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Filtrar..." />
@@ -47,26 +47,26 @@
 
             <th style="min-width: 8rem">ID</th>
             <th pSortableColumn="nome" style="min-width:16rem">
-                Curso
+                Nome
                 <p-sortIcon field="nome" />
             </th>
-            <th pSortableColumn="qtdSemestres" style="min-width: 12rem">
-                Qtd. Semestres
-                <p-sortIcon field="qtdSemestres" />
+            <th pSortableColumn="email" style="min-width: 12rem">
+                Email
+                <p-sortIcon field="email" />
             </th>
         </tr>
     </ng-template>
-    <ng-template #body let-curso>
-        <tr [pSelectableRow]="curso">
+    <ng-template #body let-aluno>
+        <tr [pSelectableRow]="aluno">
             <!--
             <td style="width: 3rem">
                 <p-tableCheckbox [value]="curso" />
             </td>
             -->
 
-            <td style="min-width: 12rem">{{ curso.id }}</td>
-            <td style="min-width: 12rem">{{ curso.nome }}</td>
-            <td style="min-width: 16rem">{{ curso.qtdSemestres }}</td>
+            <td style="min-width: 12rem">{{ aluno.id }}</td>
+            <td style="min-width: 12rem">{{ aluno.nome }}</td>
+            <td style="min-width: 16rem">{{ aluno.email }}</td>
             
             <!--
             <td>
@@ -82,15 +82,15 @@
     <form [formGroup]="novoForm" (ngSubmit)="formNovo_onSubmit()" *ngIf="novoForm_exibir">
         <div class="flex mt-8">
             <div class="card flex flex-col gap-6 w-full">
-                <div class="font-semibold text-xl">Novo curso</div>
+                <div class="font-semibold text-xl">Novo aluno</div>
                 <div class="flex flex-col md:flex-row gap-6">
                     <div class="flex flex-wrap gap-2 w-full">
-                        <label for="nome">Nome do curso</label>
+                        <label for="nome">Nome do aluno</label>
                         <input pInputText id="nome" formControlName="nome" type="text" />
                     </div>
                     <div class="flex flex-wrap gap-2 w-full">
-                        <label for="qtdSemestres">Quantidade de semestres</label>
-                        <p-inputnumber id="qtdSemestres" formControlName="qtdSemestres" showButtons mode="decimal"></p-inputnumber>
+                        <label for="qtdSemestres">email</label>
+                        <input pInputText id="qtdSemestres" formControlName="email" type="text" />
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-2 justify-end">

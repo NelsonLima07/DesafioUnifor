@@ -7,15 +7,38 @@ import { Curso } from '../coordenador/curso.service';
 export type  { Curso };
 
 
+export interface IHistorico {
+    idSemestreAluno: number; 
+    numSemestre: number;
+    ano: number;
+    curso: string;
+    disciplina: string;
+    nomeProfessor: string;
+    codStatus: number; 
+    nota: number;
+    faltas: number;
+}
+
+
 @Injectable()
 export class AlunoCursoService {
     
-    private urlAPI = `${environment.apiUrl}/alunos`;
+    private urlAPI = `${environment.apiUrl}/aluno-curso/`;
     
-    constructor(private httpClient: HttpClient) {}
-
-    getCursosAluno():Observable<Curso[]> {
-        return this.httpClient.get<Curso[]>(this.urlAPI);
+    private urlAPI_semestre = `${environment.apiUrl}/semestre-alunos/`;
+    
+    constructor(
+        private httpClient: HttpClient,
+    ) {
     }
+
+    getCursosAluno(idAluno: number | null):Observable<Curso[]> {
+        return this.httpClient.get<Curso[]>(`${this.urlAPI}/${idAluno}/cursos`);
+    }
+
+    getHistoricoAluno(idAluno: number | null):Observable<IHistorico[]> {
+        return this.httpClient.get<IHistorico[]>(`${this.urlAPI_semestre}/${idAluno}/historico`);
+    }
+
 
 }

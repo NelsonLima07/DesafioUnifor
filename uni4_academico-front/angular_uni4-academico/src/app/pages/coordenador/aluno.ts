@@ -18,7 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Curso, CursoService } from './curso.service';
+import { Aluno, AlunoService } from './aluno.service';
 import { FluidModule } from 'primeng/fluid';
 
 
@@ -59,17 +59,16 @@ interface ExportColumn {
         ReactiveFormsModule,
     ],
     templateUrl: './aluno.html',
-    providers: [MessageService, CursoService, ConfirmationService]
+    providers: [MessageService, AlunoService, ConfirmationService]
 })
 export class AlunoComponent implements OnInit {
    
 
-    cursos = signal<Curso[]>([]);
+    alunos = signal<Aluno[]>([]);
 
-    curso!: Curso;
+    aluno!: Aluno;
 
-    selecionadosCursos!: Curso[] | null;
-    cursoSelecionado!: Curso | null;
+    alunoSelecionado!: Aluno | null;
 
     novoForm: FormGroup;
     novoForm_exibir: boolean = false;
@@ -81,7 +80,7 @@ export class AlunoComponent implements OnInit {
     cols!: Column[];
 
     constructor(
-        private cursoService: CursoService,
+        private alunoService: AlunoService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private fb: FormBuilder
@@ -89,7 +88,7 @@ export class AlunoComponent implements OnInit {
     { 
         this.novoForm = this.fb.group({
             nome: ['', Validators.required],
-            qtdSemestres: ['', Validators.required]
+            email: ['', Validators.required]
         });
     }
 
@@ -102,19 +101,18 @@ export class AlunoComponent implements OnInit {
     }
 
     loadDados() {
-        this.cursoService.getCursos().subscribe({
+        this.alunoService.getAlunos().subscribe({
             next: (data) => {
-                this.cursos.set(data);
-                console.log('Cursos fetched successfully:', this.cursos());
+                this.alunos.set(data);
             },
             error: (err) => {
-                console.error('Error fetching cursos:', err);
+                console.error('Error fetching alunos:', err);
             }   
         });
 
         this.cols = [
-            { field: 'nome', header: 'Curso', customExportHeader: 'Nome Curso' },
-            { field: 'qtdSemestres', header: 'Semestres' },
+            { field: 'nome', header: 'Nome', customExportHeader: 'Nome Aluno' },
+            { field: 'email', header: 'Email' },
         ];
 
         this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -125,7 +123,7 @@ export class AlunoComponent implements OnInit {
     }
 
     btnNovo() {
-        this.curso = {};
+        this.aluno = {};
         this.novoForm.reset();
         //this.submitted = false;
         this.novoForm_exibir = true;
@@ -134,17 +132,17 @@ export class AlunoComponent implements OnInit {
     formNovo_onSubmit(){
         if (this.novoForm.valid) {
             
-            this.curso = this.novoForm.value;
+            this.aluno = this.novoForm.value;
 
-            this.cursoService.salvar(this.curso).subscribe({
+            this.alunoService.salvar(this.aluno).subscribe({
                 next: () => {
-                    this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Curso salvo com sucesso'});
+                    this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Aluno salvo com sucesso'});
                     this.loadDados();
                     
                 },
                 error: (erro) => {
-                    this.messageService.add({severity:'error', summary: 'Erro', detail: 'Erro ao salvar novo curso'});
-                    console.error('Erro ao salvar curso:', erro);
+                    this.messageService.add({severity:'error', summary: 'Erro', detail: 'Erro ao salvar novo aluno'});
+                    console.error('Erro ao salvar aluno:', erro);
                 }
             });
         }
@@ -163,29 +161,29 @@ export class AlunoComponent implements OnInit {
     }
 
     btnDeletar() {
-        if(!this.cursoSelecionado) {    
+        if(!this.alunoSelecionado) {    
             this.messageService.add({
                 severity: 'info',
                 summary: 'Atenção',
-                detail: 'Você precisa selecionar um Curso',
+                detail: 'Você precisa selecionar um Aluno',
                 life: 5000
             });
 
             return;
         }
         this.confirmationService.confirm({
-            message: 'Tem cereza que deseja deletar esse curso?',
+            message: 'Tem cereza que deseja deletar esse aluno?',
             header: 'Confirmação',
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'Sim',
             rejectLabel: 'Não',
             accept: () => {
-                this.cursoService.deletar(this.cursoSelecionado?.id!).subscribe({
+                this.alunoService.deletar(this.alunoSelecionado?.id!).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Deletado',
-                            detail: 'Curso deletado com sucesso',
+                            detail: 'Aluno deletado com sucesso',
                             life: 5000
                         });
                         this.loadDados();
@@ -197,7 +195,7 @@ export class AlunoComponent implements OnInit {
                             detail: 'Algo deu errado, tente novamente mais tarde',
                             life: 5000
                         });
-                        console.error('Erro ao deletar curso:', erro);}
+                        console.error('Erro ao deletar aluno:', erro);}
                 });
             }
         });

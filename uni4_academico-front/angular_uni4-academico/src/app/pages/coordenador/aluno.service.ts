@@ -4,29 +4,29 @@ import {Observable} from "rxjs";
 import { environment } from '../../../environments/environments';
 
 
-export interface Curso {
+export interface Aluno {
     id?: number;
     nome?: string;
-    qtdsemestres?: number;
+    email?: string;
 }
 
 @Injectable()
-export class CursoService {
+export class AlunoService {
     
-    private urlAPI = `${environment.apiUrl}/cursos`;
+    private urlAPI = `${environment.apiUrl}/alunos`;
     
     constructor(private httpClient: HttpClient) {}
 
-    getCursos():Observable<Curso[]> {
-        return this.httpClient.get<Curso[]>(this.urlAPI);
+    getAlunos():Observable<Aluno[]> {
+        return this.httpClient.get<Aluno[]>(this.urlAPI);
     }
 
     deletar(id: number): Observable<void> {
         return this.httpClient.delete<void>(`${this.urlAPI}/${id}`);
     }
 
-    salvar(curso: Curso): Observable<Curso> {
-        return this.httpClient.post<Curso>(`${this.urlAPI}`, curso);
+    salvar(aluno: Aluno): Observable<Aluno> {
+        return this.httpClient.post<Aluno>(`${this.urlAPI}`, aluno);
     }
 
 

@@ -17,9 +17,11 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import {ObjectUtils} from "primeng/utils";
-import { AlunoCursoService, Curso } from './aluno-curso.service';
+import { AlunoCursoService, Curso, IHistorico } from './aluno-curso.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { SemestreService } from '../../core/services/semestre.service';
+import { AuthService } from '../../core/services/auth.service';             
 
 interface expandedRows {
     [key: string]: boolean;
@@ -62,7 +64,7 @@ interface expandedRows {
 })
 
 export class AlunoCursoComponent implements OnInit {
-    cursosAluno: Curso[] = [];
+    historicoAluno: IHistorico[] = [];
 
 
     semestreSelectValues : any[] = [];
@@ -89,22 +91,39 @@ export class AlunoCursoComponent implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(
-        private alunoCursoService: AlunoCursoService
+        private alunoCursoService: AlunoCursoService,
+        private semestreService: SemestreService,
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
+        
+        const idAluno = this.authService.getUserID();
+
         // Semestres
-        this.semestreSelectValues = [
-            { id: 1, name: '01/2024' },
-            { id: 2, name: '02/2024' },
-            { id: 3, name: '01/2025' },
-            { id: 3, name: '02/2025' },
-            { id: 3, name: '01/2026' },
-        ];
-        this.cursoSelectValues = [
-            { id: 1, name: 'Direto' },
-            { id: 2, name: 'Informática' },
-        ];
+        this.semestreService.getSemestres().subscribe((data) => {
+            this.semestreSelectValues = data.map(semestre => ({
+                id: semestre.id,
+                name: `${semestre.numSemestre}/${semestre.ano}`
+            }));
+        });
+        
+        // Cursos do aluno
+        this.alunoCursoService.getCursosAluno(idAluno).subscribe((data) => {
+            this.cursoSelectValues = data.map(curso => ({
+                id: curso.id,
+                name: curso.nome
+            }));
+        });
+
+        // historico do aluno
+        this.alunoCursoService.getHistoricoAluno(idAluno).subscribe((data) => {
+          this.historicoAluno = data;
+          this.loading = false;
+          console.log(data);
+        });
+ 
+        
     }
 
     onSort() {
@@ -120,31 +139,35 @@ export class AlunoCursoComponent implements OnInit {
         this.filter.nativeElement.value = '';
     }
 
-    getSeverity(status: string) {
+    getStatus(status: number) {
         switch (status) {
-            case 'qualified':
-            case 'instock':
-            case 'INSTOCK':
-            case 'DELIVERED':
-            case 'delivered':
-                return 'success';
+            case 1:
+                return 'Cursando';
 
-            case 'negotiation':
-            case 'lowstock':
-            case 'LOWSTOCK':
-            case 'PENDING':
-            case 'pending':
-                return 'warn';
-
-            case 'unqualified':
-            case 'outofstock':
-            case 'OUTOFSTOCK':
-            case 'CANCELLED':
-            case 'cancelled':
-                return 'danger';
-
+            case 2:
+                return 'Aprovado';
+            
+            case 3:
+                return 'Reprovado'
+            
             default:
+                return 'Error';
+        }
+    }
+
+    getStatusSeverity(status: number) {
+        switch (status) {
+            case 1:
                 return 'info';
+
+            case 2:
+                return 'success';
+            
+            case 3:
+                return 'danger'
+            
+            default:
+                return 'secondary';
         }
     }
 

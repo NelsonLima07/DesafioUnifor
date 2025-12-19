@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -16,9 +17,18 @@ import { AppMenuitem } from './app.menuitem';
     </ul> `
 })
 export class AppMenu {
+
+    constructor(private authService: AuthService) {};           
+
     model: MenuItem[] = [];
 
     ngOnInit() {
+
+        const userRoles = this.authService.getUserRoles();
+        const isAluno = userRoles.includes('ALUNO');
+        const isProfessor = userRoles.includes('PROFESSOR');
+        const isCoordenador = userRoles.includes('COORDENADOR');    
+
         this.model = [
             {
                 label: 'Home',
@@ -28,7 +38,8 @@ export class AppMenu {
                 label: 'Aluno',
                 items: [
                     { label: 'Meus Cursos', icon: 'pi pi-graduation-cap', routerLink: ['/aluno/cursos'] }
-                ]
+                ],
+                visible: isAluno || isCoordenador
             },
             {
                 label: 'Professor',
@@ -39,7 +50,8 @@ export class AppMenu {
                         icon: 'pi pi-book',
                         routerLink: ['/professor/disciplinas']
                     },
-                ]
+                ],
+                visible: isProfessor || isCoordenador
             },
             {
                 label: 'Coordenador',
@@ -59,7 +71,8 @@ export class AppMenu {
                         icon: 'pi pi-users',
                         routerLink: ['/coordenador/alunos'],
                     },
-                ]
+                ],
+                visible: isCoordenador
             },
             {
                 label: 'Utils',
