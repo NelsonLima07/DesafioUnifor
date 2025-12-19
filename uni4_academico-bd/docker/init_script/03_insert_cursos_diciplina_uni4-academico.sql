@@ -2,7 +2,7 @@ insert into curso(nome, qtdsemestres) values('Direito', 10);
 insert into curso(nome, qtdsemestres) values('Informmática', 8);
 insert into curso(nome, qtdsemestres) values('Medicina', 10);
 
-insert into coordenador(nome, email, keycloak_id) values('Coordenador', 'coordenador', 'b7ec9716-14a4-48f0-8ec3-9d0d8166f069');
+insert into coordenador(nome, email, keycloak_id) values('Coordenador', 'coordenador', '6d3a6edc-8df9-478c-972c-ec30cd4d9060');
 
 insert into professor(nome, email, keycloak_id) values('Jesus Cristo', 'jesus.cristo@uni4.com', 'b7ec9716-14a4-48f0-8ec3-9d0d8166f069');
 insert into professor(nome, email, keycloak_id) values('Albert Einstein', 'albert.einstein@uni4.com', '5c5b4469-edaa-4aa1-990f-edf0e27c158c');

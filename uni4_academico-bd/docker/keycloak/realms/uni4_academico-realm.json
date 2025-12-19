@@ -186,6 +186,67 @@
 			}
 		  ],
 		  "realmRoles": ["PROFESSOR"]
-		}
+		},
+		{
+		  "id": "c33ce2a5-962d-4451-9df7-f5f27afd982b",
+		  "username": "nelson.lima@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Nelson Lima",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["ALUNO"]
+		},
+		{
+		  "id": "bf1e69ee-d792-4bd8-b4a1-f7734b703b3a",
+		  "username": "rafael.reis@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Rafael Reis",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["ALUNO"]
+		},
+		{
+		  "id": "93a69026-443e-42b8-b4d8-1d74c0abab05",
+		  "username": "caio.colares@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Caio Colares",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["ALUNO"]
+		},
+		{
+		  "id": "223a5527-2f92-43e7-8f46-37bbd70d420f",
+		  "username": "ronaldo.alm@uni4.com",
+		  "enabled": true,
+		  "emailVerified": true,
+			"firstName": "Ronaldo Alm",
+		  "credentials": [
+			{
+			  "type": "password",
+			  "value": "1234",
+			  "temporary": false
+			}
+		  ],
+		  "realmRoles": ["ALUNO"]
+		}		
+		
   ]
 }
